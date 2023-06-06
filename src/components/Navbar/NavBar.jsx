@@ -13,7 +13,6 @@ const NavBar = () => {
         if (!result) {
           console.log("POST")
           addUsers();
-          window.location.reload();
         } else {
           // do nothing
           console.log("User exists, NO POST")
