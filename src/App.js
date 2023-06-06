@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
+import HjemmesideView from './Views/HjemmesideView';
+import NavBar from './components/Navbar/NavBar';
+import ProfilView from './Views/ProfilView';
+import LeggetiljobbView from './Views/LeggetiljobbView';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+       <div className="App">
+       <NavBar />
+            { <Routes>
+              <Route path="/" element={ <HjemmesideView />}/>
+              <Route path="/Profil" element={ <ProfilView />}/>
+              <Route path="/leggetiljobb" element={ <LeggetiljobbView />}/>
+            </Routes> }
+        </div>
+    </BrowserRouter>
   );
 }
 
