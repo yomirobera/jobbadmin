@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import withAuth from '../../hoc/withAuth';
 import { addStilling } from '../../api/LeggtilJobb';
-import { getUser } from '../../api/user'; // Import the modified getUser function
+import { getUser } from '../../api/user'; 
 
 const Leggetiljobb = () => {
   const [stilling, setStilling] = useState({
