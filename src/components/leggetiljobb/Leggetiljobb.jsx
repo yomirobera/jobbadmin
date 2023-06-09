@@ -32,12 +32,7 @@ const Leggetiljobb = () => {
         ...stilling,
         users: [currentUser.id],
       };
-      stilling.users = currentUser.id;
-
-      console.log(stilling);
-      console.log(stilling.users);
-      console.log(jobListing);
-      console.log(jobListing.users);
+      //stilling.users = currentUser.id;
 
       const response = await addStilling(jobListing);
       console.log(response);
