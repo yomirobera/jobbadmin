@@ -1,13 +1,13 @@
 /* Profil.css */
 .profil-container {
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
     height: 80vh;
   }
   
   .profil-form {
-    display: flex;
+    display: grid;
     flex-direction: column;
     align-items: center;
     padding: 20px;
@@ -20,7 +20,6 @@
   }
   
   .profil-form > div {
-    display: flex;
     align-items: center;
     margin-bottom: 10px;
   }
