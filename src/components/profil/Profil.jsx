@@ -82,9 +82,6 @@ const Profil = () => {
   
   return (
     <div className="profil-container">
-      <div>
-        <h2>Profil</h2>
-      </div>
       {user ? (
         <form className="profil-form" onSubmit={handleFormSubmit}>
           <div>

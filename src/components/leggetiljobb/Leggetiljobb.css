@@ -1,8 +1,7 @@
 .Leggetiljobb-container {
-    padding-top: 100px;
+    padding-top: 2px;
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: 10px;
     max-width: 30em;
     margin: 0 auto;
     font-family: Arial, sans-serif;
