@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Hjemmeside.css";
 
 const Hjemmeside = () => {
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -39,3 +40,4 @@ const Hjemmeside = () => {
 };
 
 export default Hjemmeside;
+
