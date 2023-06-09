@@ -1,35 +1,39 @@
-.Leggetiljobb {
-    padding-top: 150px;
+.Leggetiljobb-container {
+    padding-top: 100px;
     display: grid;
     grid-template-columns: max-content 1fr;
     gap: 10px;
-    max-width: 400px;
+    max-width: 30em;
     margin: 0 auto;
     font-family: Arial, sans-serif;
   }
   
-  label {
+  .Leggetiljobb-card {
+    padding: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    width: 100%;
+  }
+  
+  .Leggetiljobb-label {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
     font-weight: bold;
   }
   
-  input[type="text"] {
+  .Leggetiljobb-input {
     padding: 10px;
     border-radius: 4px;
     resize: vertical;
     border: 1px solid #ccc;
     font-size: 16px;
-    grid-column: span 2;
+    width: 100%;
   }
   
-  input[type="date"] {
-    padding: 10px;
-  }
-
-  
-  button {
+  .Leggetiljobb-button {
     padding: 10px 16px;
     background-color: #007bff;
     color: #fff;
@@ -37,19 +41,19 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    grid-column: span 2;
+    width: 100%;
   }
   
-  button:hover {
+  .Leggetiljobb-button:hover {
     background-color: #0056b3;
   }
   
-  .errorMessage {
+  .Leggetiljobb-errorMessage {
     color: red;
     margin-top: 5px;
   }
   
-  .successMessage {
+  .Leggetiljobb-successMessage {
     color: green;
     margin-top: 5px;
   }

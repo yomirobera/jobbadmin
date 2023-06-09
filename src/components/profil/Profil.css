@@ -1,11 +1,12 @@
-.container {
+/* Profil.css */
+.profil-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
   }
   
-  form {
+  .profil-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,26 +19,26 @@
     height: 300px;
   }
   
-  form > div {
+  .profil-form > div {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
   }
   
-  label {
+  .profil-label {
     margin-right: 10px;
   }
   
-  input[type="text"],
-  input[type="email"] {
+  .profil-input[type="text"],
+  .profil-input[type="email"] {
     width: 200px;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
   
-  button[type="submit"],
-  button[type="application"] {
+  .profil-submit-btn,
+  .profil-application-btn {
     margin-top: 30px;
     padding: 8px 16px;
     background-color: #4caf50;
@@ -47,16 +48,16 @@
     cursor: pointer;
   }
   
-  button[type="submit"]:hover,
-  button[type="application"]:hover {
+  .profil-submit-btn:hover,
+  .profil-application-btn:hover {
     background-color: #349139;
   }
   
-  button[type="application"] {
+  .profil-application-btn {
     background-color: #6084f8;
   }
   
-  button[type="application"]:hover {
+  .profil-application-btn:hover {
     background-color: #416af1;
   }
   

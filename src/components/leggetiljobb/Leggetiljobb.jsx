@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import withAuth from '../../hoc/withAuth';
 import { addStilling } from '../../api/LeggtilJobb';
-import { getUser } from '../../api/user'; 
+import { getUser } from '../../api/user';
+import './Leggetiljobb.css';
 
 const Leggetiljobb = () => {
   const [stilling, setStilling] = useState({
@@ -38,14 +39,15 @@ const Leggetiljobb = () => {
   };
 
   return (
-    <div className="Leggetiljobb">
+    <div className="Leggetiljobb-container">
+    <div className="Leggetiljobb-card">
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="Leggetiljobb-label">
           Tittel:
-          <input type="text" name="tittel" maxLength={50} required onChange={handleInputChange} />
+          <input type="text" name="tittel" maxLength={50} required onChange={handleInputChange} className="Leggetiljobb-input" />
         </label>
 
-        <label>
+        <label className="Leggetiljobb-label">
           Beskrivelse:
           <input
             type="text"
@@ -53,15 +55,16 @@ const Leggetiljobb = () => {
             maxLength={500}
             required
             onChange={handleInputChange}
+            className="Leggetiljobb-input"
           />
         </label>
 
-        <label>
+        <label className="Leggetiljobb-label">
           Krav:
-          <input type="text" name="krav" maxLength={100} required onChange={handleInputChange} />
+          <input type="text" name="krav" maxLength={100} required onChange={handleInputChange} className="Leggetiljobb-input" />
         </label>
 
-        <label>
+        <label className="Leggetiljobb-label">
           Plassering:
           <input
             type="text"
@@ -69,21 +72,23 @@ const Leggetiljobb = () => {
             maxLength={50}
             required
             onChange={handleInputChange}
+            className="Leggetiljobb-input"
           />
         </label>
 
-        <label>
+        <label className="Leggetiljobb-label">
           Søknadsfrist:
-          <input type="date" name="soknadsfrist" required onChange={handleInputChange} />
+          <input type="date" name="soknadsfrist" required onChange={handleInputChange} className="Leggetiljobb-input" />
         </label>
 
-        <label>
+        <label className="Leggetiljobb-label">
           PDF:
-          <input type="text" name="PDF" onChange={handleInputChange} />
+          <input type="text" name="PDF" onChange={handleInputChange} className="Leggetiljobb-input" />
         </label>
-        <button type="submit">Legg til jobb</button>
+        <button type="submit" className="Leggetiljobb-button">Legg til jobb</button>
       </form>
     </div>
+  </div>
   );
 };
 
