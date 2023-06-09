@@ -6,20 +6,20 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   if (keycloak.authenticated) {
-    console.log(keycloak.tokenParsed.sub)
+    console.log(keycloak.tokenParsed.sub);
     getUser(keycloak.tokenParsed.sub)
-      .then(result => {
-        console.log(result)
+      .then((result) => {
+        console.log(result);
         if (!result) {
-          console.log("POST")
+          console.log("POST");
           addUsers();
-          window.location.reload();
+          // window.location.reload();
         } else {
           // do nothing
-          console.log("User exists, NO POST")
+          console.log("User exists, NO POST");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -28,26 +28,16 @@ const NavBar = () => {
     <div className="registrer">
       {!keycloak.authenticated && (
         <>
-          <button
-            onClick={() => keycloak.login()}
-          >
-            Logg inn
-          </button>
+          <button onClick={() => keycloak.login()}>Logg inn</button>
 
-          <button
-            onClick={() => keycloak.register()}
-          >
-            Ny bruker
-          </button>
+          <button onClick={() => keycloak.register()}>Ny bruker</button>
         </>
       )}
 
       {keycloak.authenticated && (
         <div className="navbar__item">
           <NavLink className="tekst" to="/">
-            <button>
-              Stillingsannonser
-            </button>
+            <button>Stillingsannonser</button>
           </NavLink>
         </div>
       )}
@@ -55,10 +45,7 @@ const NavBar = () => {
       {keycloak.authenticated && (
         <div className="navbar__item">
           <NavLink className="tekst" to="/leggetiljobb">
-            <button>
-              Legg til jobb
-            </button>
-
+            <button>Legg til jobb</button>
           </NavLink>
         </div>
       )}
@@ -66,10 +53,7 @@ const NavBar = () => {
       {keycloak.authenticated && (
         <div className="navbar__item">
           <NavLink className="tekst" to="/Profil">
-            <button>
-              Profil
-            </button>
-
+            <button>Profil</button>
           </NavLink>
         </div>
       )}
@@ -86,6 +70,6 @@ const NavBar = () => {
         </button>
       )}
     </div>
-  )
-}
+  );
+};
 export default NavBar;
