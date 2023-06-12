@@ -1,26 +1,7 @@
-.data-list {
-  list-style: none;
-  padding: 0;
-}
-
-.data-item {
+.cardContainer {
   display: flex;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
 }
 
-.item-tittel {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.item-beskrivelse {
-  flex-grow: 1;
-  margin-right: 10px;
-}
-
-.item-krav {
-  font-weight: bold;
+.card {
+  margin-left: 55%;
 }

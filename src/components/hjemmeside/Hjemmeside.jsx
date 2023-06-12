@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Hjemmeside.css";
+import { Card, Space } from "antd";
+import SearchBar from "../Search/Search";
 
 const Hjemmeside = () => {
-
   const [data, setData] = useState([]);
+  const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -18,26 +20,41 @@ const Hjemmeside = () => {
       console.log("Error fetching data", error);
     }
   };
+
+  var filterData = () => {
+    const filteredData = data.filter((stilling) =>
+      stilling.tittel.includes(searchWord)
+    );
+    return filteredData.map((item) => {
+      return (
+        <div className="card" key={item.id}>
+          <Space direction="vertical" size={16}>
+            <Card
+              title={item.tittel}
+              extra={<a href="#">More</a>}
+              style={{ width: 300 }}
+            >
+              <p>{item.beskrivelse}</p>
+              <p>{item.krav}</p>
+            </Card>
+          </Space>
+        </div>
+      );
+    });
+  };
+
   return (
     <div>
       <h1>Hjemmeside</h1>
-
-      <div class="row" id="cardContainer">
-        <h2>Data Display</h2>
-
-        {data.map((item, index) => (
-          <div class="card" key={index}>
-            <div class="card-body">
-              <h5 class="card-title">{item.tittel}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{item.beskrivelse}</h6>
-              <p class="card-text">{item.krav}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <SearchBar
+        SearchWord={searchWord}
+        setSearchWord={setSearchWord}
+        filterData={filterData}
+      />
+      <h2>Data Display</h2>
+      <div className="cardContainer">{filterData()}</div>
     </div>
   );
 };
 
 export default Hjemmeside;
-
