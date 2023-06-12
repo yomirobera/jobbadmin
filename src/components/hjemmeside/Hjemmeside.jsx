@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Hjemmeside.css";
 import { Card, Space } from "antd";
 import SearchBar from "../Search/Search";
+import BigCard from "../BigCard/BigCard";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
@@ -52,7 +53,10 @@ const Hjemmeside = () => {
         filterData={filterData}
       />
       <h2>Data Display</h2>
-      <div className="cardContainer">{filterData()}</div>
+      <div className="cardContainer">
+        <BigCard></BigCard>
+        {filterData()}
+      </div>
     </div>
   );
 };

@@ -3,5 +3,10 @@
 }
 
 .card {
-  margin-left: 55%;
+  margin-left: 20%;
+}
+
+.bigCard {
+  display: flex;
+  margin-left: 10%;
 }
