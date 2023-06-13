@@ -1,7 +1,10 @@
 import withAuth from "../../hoc/withAuth";
 import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import keycloak from "../keycloak/keycloak";
 import { apiUrl } from "../../api/user";
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 
 import './Profil.css';
 
@@ -10,14 +13,19 @@ const Profil = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [selger, setSelger] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleApplicationClick = () => {
+    navigate('/Application');
+  };
 
   const fetchUser = useCallback(async () => {
     try {
-      // Update token and get user ID
       await keycloak.updateToken(5);
       const userId = keycloak.tokenParsed.sub;
 
-      // Fetch user data with token in Authorization header 
       const response = await fetch(`${apiUrl}/${userId}`);
 
       if (!response.ok) {
@@ -29,6 +37,7 @@ const Profil = () => {
       setFirstName(fetchedUser.firstName);
       setLastName(fetchedUser.lastName);
       setEmail(fetchedUser.email);
+      setSelger(fetchedUser.selger);
     } catch (error) {
       // Handle error
     }
@@ -55,6 +64,9 @@ const Profil = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    const submitButton = event.nativeEvent.submitter;
+    const isOppdaterButton = submitButton.classList.contains('profil-submit-btn');
+
     try {
       const response = await fetch(`${apiUrl}/${keycloak.tokenParsed.sub}`, {
         method: 'PUT',
@@ -65,18 +77,21 @@ const Profil = () => {
           id: keycloak.tokenParsed.sub,
           firstName: firstName,
           lastName: lastName,
-          email: email
+          email: email,
+          selger: selger
         })
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to update user. Status code: ${response.status}`);
+        throw new Error(`Feil med bruker oppdatering. ${response.status}`);
       }
-
       setUser(response);
-      alert('User updated successfully');
+
+      if (isOppdaterButton) {
+        alert(`Du har oppdatert brukerinfromasjon`);
+      }
     } catch (error) {
-      alert(`Failed to update user: ${error.message}`);
+      alert(`Feil med oppdatering av bruker: ${error.message}`);
     }
   };
   
@@ -84,7 +99,10 @@ const Profil = () => {
     <div className="profil-container">
       {user ? (
         <form className="profil-form" onSubmit={handleFormSubmit}>
-          <div>
+          <div> 
+            <div className="avatar-container">
+              <Avatar size={150} icon={<UserOutlined />} /> 
+            </div>
             <label className="profil-label" htmlFor="firstName">Fornavn:</label>
             <input
               className="profil-input"
@@ -117,8 +135,19 @@ const Profil = () => {
               onChange={handleInputChange}
             />
           </div>
+          <div>
+            <label className="profil-label" htmlFor="selger">Bli selger for å kunne legge til Stillingsannonser:</label>
+            <input
+              className="profil-input"
+              type="checkbox"
+              name="selger"
+              id="selger"
+              checked={selger}
+              onChange={() => setSelger(!selger)}
+            />
+          </div>
           <button className="profil-submit-btn" type="submit">Oppdater</button>
-          <button className="profil-application-btn" type="application">Se dine søknader</button>
+          <button className="profil-application-btn" type="application" onClick={handleApplicationClick}>Se dine søknader</button>
         </form>
       ) : (
         <p>Loading...</p>

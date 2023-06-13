@@ -1,32 +1,43 @@
 import keycloak from "../keycloak/keycloak";
 import { NavLink, useNavigate } from "react-router-dom";
 import { addUsers, getUser } from "../../api/user";
+import React, { useState, useEffect } from "react";
 
 import './NavBar.css';
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [userRole, setUserRole] = useState("");
 
-  if (keycloak.authenticated) {
-    console.log(keycloak.tokenParsed.sub);
-    getUser(keycloak.tokenParsed.sub)
-
-      .then(result => {
-
-        console.log(result);
-        if (!result) {
-          console.log("POST");
-          addUsers();
-
-        } else {
-          // do nothing
-          console.log("User exists, NO POST");
-        }
-      })
-      .catch((error) => {
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const user = await getUser(keycloak.tokenParsed.sub);
+        setUserRole(user && user.selger ? user.selger : false);
+      } catch (error) {
         console.error(error);
-      });
-  }
+      }
+    };
+
+    if (keycloak.authenticated) {
+      console.log(keycloak.tokenParsed.sub);
+      getUser(keycloak.tokenParsed.sub)
+        .then((result) => {
+          console.log(result);
+          if (!result) {
+            console.log("POST");
+            addUsers();
+          } else {
+            // do nothing
+            console.log("User exists, NO POST");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      fetchUserRole();
+    }
+  }, []);
 
   return (
     <div className="navbar">
@@ -53,7 +64,7 @@ const NavBar = () => {
         </div>
       )}
 
-      {keycloak.authenticated && (
+      {keycloak.authenticated && userRole && userRole !== "Selger" && (
         <div className="navbar__item">
 
           <NavLink className="navbar__link" activeClassName="active" to="/leggetiljobb">
