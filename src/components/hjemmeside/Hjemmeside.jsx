@@ -3,6 +3,9 @@ import "./Hjemmeside.css";
 import { Card, Space } from "antd";
 import SearchBar from "../Search/Search";
 import BigCard from "../BigCard/BigCard";
+import keycloak from "../keycloak/keycloak";
+import { useNavigate } from "react-router-dom";
+import {withAuth} from "../../hoc/withAuth"
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
@@ -22,6 +25,36 @@ const Hjemmeside = () => {
     }
   };
 
+  let navigate = useNavigate(); 
+  const routeChange = (path) =>{ 
+    navigate(path);}
+
+
+  const postUserToStilling = async () => {
+    try{
+      await fetch(`http://localhost:8080/api/v1/stilling/${keycloak.tokenParsed.sub}  `, {
+        method: 'POST',
+        body: JSON.stringify({
+          // Add parameters here
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            console.log(data);
+            // Handle data
+         })
+         .catch((err) => {
+            console.log(err.message);
+         });
+
+    }catch(error) {
+      console.log(error)
+    }
+  }
+
   var filterData = () => {
     const filteredData = data.filter((stilling) =>
       stilling.tittel.includes(searchWord)
@@ -32,7 +65,7 @@ const Hjemmeside = () => {
           <Space direction="vertical" size={16}>
             <Card
               title={item.tittel}
-              extra={<a href="#">More</a>}
+              extra={<a href="#" onClick={postUserToStilling()}>More</a>}
               style={{ width: 300 }}
             >
               <p>{item.beskrivelse}</p>
@@ -61,4 +94,4 @@ const Hjemmeside = () => {
   );
 };
 
-export default Hjemmeside;
+export default withAuth(Hjemmeside);
