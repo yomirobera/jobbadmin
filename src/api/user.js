@@ -1,6 +1,7 @@
+
 import keycloak from "../components/keycloak/keycloak";
 
-// API URL for user
+// API URL for user operations
 const apiUrl = "http://localhost:8080/api/v1/users"
 
 // Function to get user by ID
@@ -38,7 +39,8 @@ const addUsers = async () => {
         id: keycloak.tokenParsed.sub,
         firstName: keycloak.tokenParsed.given_name,
         lastName: keycloak.tokenParsed.family_name,
-        email: keycloak.tokenParsed.email
+        email: keycloak.tokenParsed.email,
+        selger:false
       }),
     });
     return response;
