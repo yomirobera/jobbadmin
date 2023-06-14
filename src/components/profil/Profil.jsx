@@ -1,24 +1,24 @@
 import withAuth from "../../hoc/withAuth";
-import { useEffect, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import keycloak from "../keycloak/keycloak";
 import { apiUrl } from "../../api/user";
-import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from 'antd';
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 
-import './Profil.css';
+import "./Profil.css";
 
 const Profil = () => {
   const [user, setUser] = useState(null);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [selger, setSelger] = useState(false);
 
   const navigate = useNavigate();
 
   const handleApplicationClick = () => {
-    navigate('/Application');
+    navigate("/Application");
   };
 
   const fetchUser = useCallback(async () => {
@@ -29,7 +29,9 @@ const Profil = () => {
       const response = await fetch(`${apiUrl}/${userId}`);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch user. Status code: ${response.status}`);
+        throw new Error(
+          `Failed to fetch user. Status code: ${response.status}`
+        );
       }
 
       const fetchedUser = await response.json();
@@ -52,11 +54,11 @@ const Profil = () => {
     const value = target.value;
     const name = target.name;
 
-    if (name === 'firstName') {
+    if (name === "firstName") {
       setFirstName(value);
-    } else if (name === 'lastName') {
+    } else if (name === "lastName") {
       setLastName(value);
-    } else if (name === 'email') {
+    } else if (name === "email") {
       setEmail(value);
     }
   };
@@ -65,21 +67,22 @@ const Profil = () => {
     event.preventDefault();
 
     const submitButton = event.nativeEvent.submitter;
-    const isOppdaterButton = submitButton.classList.contains('profil-submit-btn');
+    const isOppdaterButton =
+      submitButton.classList.contains("profil-submit-btn");
 
     try {
       const response = await fetch(`${apiUrl}/${keycloak.tokenParsed.sub}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           id: keycloak.tokenParsed.sub,
           firstName: firstName,
           lastName: lastName,
           email: email,
-          selger: selger
-        })
+          selger: selger,
+        }),
       });
 
       if (!response.ok) {
@@ -89,21 +92,24 @@ const Profil = () => {
 
       if (isOppdaterButton) {
         alert(`Du har oppdatert brukerinfromasjon`);
+        window.location.reload();
       }
     } catch (error) {
       alert(`Feil med oppdatering av bruker: ${error.message}`);
     }
   };
-  
+
   return (
     <div className="profil-container">
       {user ? (
         <form className="profil-form" onSubmit={handleFormSubmit}>
-          <div> 
+          <div>
             <div className="avatar-container">
-              <Avatar size={150} icon={<UserOutlined />} /> 
+              <Avatar size={150} icon={<UserOutlined />} />
             </div>
-            <label className="profil-label" htmlFor="firstName">Fornavn:</label>
+            <label className="profil-label" htmlFor="firstName">
+              Fornavn:
+            </label>
             <input
               className="profil-input"
               type="text"
@@ -114,7 +120,9 @@ const Profil = () => {
             />
           </div>
           <div>
-            <label className="profil-label" htmlFor="lastName">Etternavn:</label>
+            <label className="profil-label" htmlFor="lastName">
+              Etternavn:
+            </label>
             <input
               className="profil-input"
               type="text"
@@ -125,7 +133,9 @@ const Profil = () => {
             />
           </div>
           <div>
-            <label className="profil-label" htmlFor="email">Email:</label>
+            <label className="profil-label" htmlFor="email">
+              Email:
+            </label>
             <input
               className="profil-input"
               type="email"
@@ -136,7 +146,9 @@ const Profil = () => {
             />
           </div>
           <div>
-            <label className="profil-label" htmlFor="selger">Bli selger for å kunne legge til Stillingsannonser:</label>
+            <label className="profil-label" htmlFor="selger">
+              Bli selger for å kunne legge til Stillingsannonser:
+            </label>
             <input
               className="profil-input"
               type="checkbox"
@@ -146,8 +158,16 @@ const Profil = () => {
               onChange={() => setSelger(!selger)}
             />
           </div>
-          <button className="profil-submit-btn" type="submit">Oppdater</button>
-          <button className="profil-application-btn" type="application" onClick={handleApplicationClick}>Se dine søknader</button>
+          <button className="profil-submit-btn" type="submit">
+            Oppdater
+          </button>
+          <button
+            className="profil-application-btn"
+            type="application"
+            onClick={handleApplicationClick}
+          >
+            Se dine søknader
+          </button>
         </form>
       ) : (
         <p>Loading...</p>
