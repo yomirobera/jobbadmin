@@ -30,17 +30,18 @@ const Hjemmeside = () => {
     navigate(path);
   };
 
-  const postUserToStilling = async () => {
+  const postUserToStilling = async (stillingId) => {
     try {
       await fetch(
-        `http://localhost:8080/api/v1/stilling/${keycloak.tokenParsed.sub}  `,
+        `http://localhost:8080/api/v1/stilling/${stillingId}/users/${keycloak.tokenParsed.sub}`,
         {
-          method: "POST",
+          method: "PUT",
           body: JSON.stringify({
             // Add parameters here
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
           },
         }
       )
@@ -67,7 +68,11 @@ const Hjemmeside = () => {
           <Space direction="vertical" size={16}>
             <Card
               title={item.tittel}
-              extra={<a href="#" /*onClick={postUserToStilling()}*/>More</a>}
+              extra={
+                <a href="#" onClick={postUserToStilling(item.id)}>
+                  More
+                </a>
+              }
               style={{ width: 300 }}
             >
               <p>{item.beskrivelse}</p>
@@ -88,6 +93,7 @@ const Hjemmeside = () => {
         filterData={filterData}
       />
       <h2>Data Display</h2>
+
       <div className="cardContainer">
         <BigCard></BigCard>
         {filterData()}
