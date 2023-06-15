@@ -40,6 +40,7 @@
     border: 1px solid gray;
     border-radius: 4px;
     transition: all 0.3s ease;
+    color: white;
   }
   
   .navbar__button:hover {

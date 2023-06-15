@@ -43,4 +43,22 @@ const addStilling = async (stilling) => {
     }
   };
 
-  export {addStilling, deleteStilling, getStillinger, apiUrl};
+  const updateStilling = async (stilling) => {
+    try {
+      const response = await fetch(`${apiUrl}/${stilling.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(stilling),
+      });
+      if (!response.ok) {
+        throw new Error("Feil ved oppdatering av stilling");
+      }
+    } catch (error) {
+      throw new Error(`Feil oppstår ved oppdatering av stilling: ${error.message}`);
+    }
+  };
+  
+  export { addStilling, deleteStilling, getStillinger, updateStilling, apiUrl };
+  

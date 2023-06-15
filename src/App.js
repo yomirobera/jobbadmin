@@ -7,6 +7,7 @@ import ProfilView from './Views/ProfilView';
 import LeggetiljobbView from './Views/LeggetiljobbView';
 import ApplicationView from './Views/ApplicationView';
 import MineStillingerView from './Views/MineStillingerView';
+import RedigerStilling from './components/rediger/RedigerStilling';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/leggetiljobb" element={ <LeggetiljobbView />}/>
               <Route path="/MineStillinger" element={ <MineStillingerView />}/>
               <Route path="/Application" element={ <ApplicationView />}/>
+              <Route path="/edit-stilling/:id" element={<RedigerStilling />} /> 
             </Routes> }
         </div>
     </BrowserRouter>

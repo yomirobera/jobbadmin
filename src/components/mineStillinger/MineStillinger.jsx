@@ -1,49 +1,95 @@
 import React, { useEffect, useState } from "react";
-import { getStillinger } from "../../api/LeggtilJobb";
+import { getStillinger, deleteStilling } from "../../api/LeggtilJobb";
 import keycloak from "../keycloak/keycloak";
-import { Card } from "antd";
-import withAuth from "../../hoc/withAuth";
+import { Card, Button, Space, Modal } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const MineStillinger = () => {
-    //For å lagre stillingene
-    const [stillinger, setStillinger] = useState([]);
-    // Henter userId fra innlogget bruker
-    const userId = keycloak.tokenParsed.sub;
+  const [stillinger, setStillinger] = useState([]);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [stillingToDelete, setStillingToDelete] = useState(null);
+  const userId = keycloak.tokenParsed.sub;
 
-    useEffect(() => {
-        fetchStillinger();
-    }, []);
+  useEffect(() => {
+    fetchStillinger();
+  }, []);
 
-    const fetchStillinger = async () => {
-        try {
-            // Henter stillinger fra API
-            const response = await getStillinger();
-            setStillinger(response); // Lagrer stillingene i tilstanden
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  const fetchStillinger = async () => {
+    try {
+      const response = await getStillinger();
+      setStillinger(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const filterStillingerByUser = () => {
-        return stillinger.filter((stilling) => {
-            return stilling.users.includes(userId); // Filtrer stillinger som inneholder den innloggede brukeren
-        });
-    };
+  const filterStillingerByUser = () => {
+    return stillinger.filter((stilling) => {
+      return stilling.users.includes(userId);
+    });
+  };
 
-    const filteredStillinger = filterStillingerByUser(); // Filtrerte stillinger for den innloggede brukeren
+  const filteredStillinger = filterStillingerByUser();
 
-    return (
-        <div>
-          <h3>Dine stillinger:</h3>
-          {filteredStillinger.map((stilling) => (
-            <Card key={stilling.id}>
-              <h4>{stilling.frma}</h4>
-              <p>{stilling.tittel}</p>
-              <p>{stilling.kode}</p>
-            </Card>
-          ))}
-        </div>
-      );
-    };
+  const bekreftSlett = (stilling) => {
+    setStillingToDelete(stilling);
+    setDeleteModalVisible(true);
+  };
 
-export default withAuth(MineStillinger);
+  const handleDelete = async () => {
+    try {
+      if (stillingToDelete) {
+        await deleteStilling(stillingToDelete.id);
+        setStillingToDelete(null);
+        setDeleteModalVisible(false);
+        fetchStillinger(); // Refresh stillinger etter sletting
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const cancelDelete = () => {
+    setStillingToDelete(null);
+    setDeleteModalVisible(false);
+  };
+
+  return (
+    <div>
+      <h3>Dine stillinger:</h3>
+      {filteredStillinger.map((stilling) => (
+        <Card key={stilling.id}>
+          <h4>{stilling.firma}</h4>
+          <p>{stilling.tittel}</p>
+          <p>{stilling.beskrivelse}</p>
+          <p>{stilling.kode}</p>
+          <Space>
+            <Link to={`/edit-stilling/${stilling.id}`}>
+              <Button type="primary" icon={<EditOutlined />}>
+                Rediger
+              </Button>
+            </Link>
+            <Button
+              type="danger"
+              icon={<DeleteOutlined />}
+              onClick={() => bekreftSlett(stilling)}
+            >
+              Slett
+            </Button>
+          </Space>
+        </Card>
+      ))}
+      <Modal
+        title="Bekreft Slett"
+        visible={deleteModalVisible}
+        onOk={handleDelete}
+        onCancel={cancelDelete}
+      >
+        <p>Er du sikker på at du vil slette denne stilling?</p>
+      </Modal>
+    </div>
+  );
+};
+
+export default MineStillinger;
