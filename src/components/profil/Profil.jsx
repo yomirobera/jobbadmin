@@ -166,7 +166,7 @@ const Profil = () => {
             type="application"
             onClick={handleApplicationClick}
           >
-            Se dine søknader
+            Se dine favoritt Stillingsannonser
           </button>
         </form>
       ) : (

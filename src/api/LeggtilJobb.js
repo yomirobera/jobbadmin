@@ -16,4 +16,31 @@ const addStilling = async (stilling) => {
     }
   };
 
-  export {addStilling, apiUrl};
+  const deleteStilling = async (stillingId) => {
+    try {
+      const response = await fetch(`${apiUrl}/${stillingId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Feil ved sletting av stilling");
+      }
+    } catch (error) {
+      throw new Error(`Feil oppstår ved sletting av stilling: ${error.message}`);
+    }
+  };
+  
+
+  const getStillinger = async () => {
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error("Feil ved henting av stillinger");
+      }
+      const stillinger = await response.json();
+      return stillinger;
+    } catch (error) {
+      throw new Error(`Feil oppstår ved henting av stillinger: ${error.message}`);
+    }
+  };
+
+  export {addStilling, deleteStilling, getStillinger, apiUrl};
