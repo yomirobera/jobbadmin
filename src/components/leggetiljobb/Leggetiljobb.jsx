@@ -8,12 +8,14 @@ import keycloak from "../keycloak/keycloak";
 const Leggetiljobb = () => {
   const [stilling, setStilling] = useState({
     tittel: "",
+    firma: "",
     beskrivelse: "",
     krav: "",
     plassering: "",
     soknadsfrist: "",
     users: [],
-    pdf: "",
+    lenke: "",
+    kode: "",
   });
 
   const handleInputChange = (event) => {

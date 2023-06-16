@@ -69,9 +69,7 @@ const Hjemmeside = () => {
             <Card
               title={item.tittel}
               extra={
-                <a href="#" onClick={postUserToStilling(item.id)}>
-                  More
-                </a>
+                <button onClick={postUserToStilling(item.id)}>Like</button>
               }
               style={{ width: 300 }}
             >
