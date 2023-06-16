@@ -74,6 +74,15 @@ const NavBar = () => {
         </div>
       )}
 
+      {keycloak.authenticated && userRole && userRole !== "Selger" && (
+        <div className="navbar__item">
+
+          <NavLink className="navbar__link" activeClassName="active" to="/MineStillinger">
+          Mine Stillinger
+          </NavLink>
+        </div>
+      )}
+
       {keycloak.authenticated && (
         <div className="navbar__item">
 

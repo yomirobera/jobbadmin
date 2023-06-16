@@ -7,15 +7,16 @@ import keycloak from "../keycloak/keycloak";
 
 const Leggetiljobb = () => {
   const [stilling, setStilling] = useState({
+    firma:"",
     tittel: "",
     firma: "",
     beskrivelse: "",
     krav: "",
     plassering: "",
     soknadsfrist: "",
-    users: [],
     lenke: "",
-    kode: "",
+    kode:"",
+    users: keycloak.tokenParsed.sub,
   });
 
   const handleInputChange = (event) => {
@@ -38,6 +39,7 @@ const Leggetiljobb = () => {
 
       const response = await addStilling(jobListing);
       console.log(response);
+      alert("Stillingsannonsen har blitt registrert")
     } catch (error) {
       console.error(error);
     }
@@ -45,10 +47,24 @@ const Leggetiljobb = () => {
 
   return (
     <div className="Leggetiljobb-container">
+      <h3 className="jobb">Legge til en jobb</h3>
+        <p className="jobb">Du vet hva du leter etter. Vi hjelper deg å finne dem. Legg ut ledige stillinger og ansett raskt det beste talentet</p>
       <div className="Leggetiljobb-card">
         <form onSubmit={handleSubmit}>
+        <label className="Leggetiljobb-label">
+          <span className="Leggetiljobb-label-text">Firma:</span>
+            <input
+              type="text"
+              name="firma"
+              maxLength={50}
+              required
+              onChange={handleInputChange}
+              className="Leggetiljobb-input"
+            />
+          </label>
+
           <label className="Leggetiljobb-label">
-            Tittel:
+          <span className="Leggetiljobb-label-text">Tittel:</span>
             <input
               type="text"
               name="tittel"
@@ -60,7 +76,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-            Beskrivelse:
+          <span className="Leggetiljobb-label-text">Beskrivelse:</span>
             <input
               type="text"
               name="beskrivelse"
@@ -72,7 +88,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-            Krav:
+            <span className="Leggetiljobb-label-text">Krav:</span>
             <input
               type="text"
               name="krav"
@@ -84,7 +100,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-            Plassering:
+          <span className="Leggetiljobb-label-text">Plassering:</span>
             <input
               type="text"
               name="plassering"
@@ -96,7 +112,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-            Søknadsfrist:
+          <span className="Leggetiljobb-label-text">Søknadsfrist:</span>
             <input
               type="date"
               name="soknadsfrist"
@@ -107,14 +123,25 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-            PDF:
+          <span className="Leggetiljobb-label-text">Ekstern lenke:</span>
             <input
               type="text"
-              name="pdf"
+              name="lenke"
               onChange={handleInputChange}
               className="Leggetiljobb-input"
             />
           </label>
+
+          <label className="Leggetiljobb-label">
+          <span className="Leggetiljobb-label-text">Kodeområde:</span>
+            <input
+              type="text"
+              name="kode"
+              onChange={handleInputChange}
+              className="Leggetiljobb-input"
+            />
+          </label>
+
           <button type="submit" className="Leggetiljobb-button">
             Legg til jobb
           </button>

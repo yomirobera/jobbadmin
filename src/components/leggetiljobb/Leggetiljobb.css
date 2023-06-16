@@ -1,59 +1,74 @@
 .Leggetiljobb-container {
-    padding-top: 2px;
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    max-width: 30em;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
-  
-  .Leggetiljobb-card {
-    padding: 100px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-    width: 100%;
-  }
-  
-  .Leggetiljobb-label {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  
-  .Leggetiljobb-input {
-    padding: 10px;
-    border-radius: 4px;
-    resize: vertical;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    width: 100%;
-  }
-  
-  .Leggetiljobb-button {
-    padding: 10px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .Leggetiljobb-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .Leggetiljobb-errorMessage {
-    color: red;
-    margin-top: 5px;
-  }
-  
-  .Leggetiljobb-successMessage {
-    color: green;
-    margin-top: 5px;
-  }
-  
+  padding-top: 10px;
+  display: grid;
+  max-width: 50%;
+  padding-left: 20%;
+  margin: 10 auto;
+  font-family: Arial, sans-serif;
+}
+
+.Leggetiljobb-card {
+  padding: 100px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: rgb(88, 78, 78);
+  width: 100%;
+}
+
+.jobb {
+  text-align: center;
+  padding-left: 20%;
+}
+
+.Leggetiljobb-label {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  font-weight: bold;
+  align-items: center; 
+  color: white;
+}
+
+.Leggetiljobb-label-text {
+  width: 150px;
+  text-align: right;
+  padding-right: 20px;
+  margin-right: 20px; 
+}
+
+
+.Leggetiljobb-input {
+  padding: 10px;
+  border-radius: 4px;
+  resize: vertical;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  flex-grow: 1;
+}
+
+.Leggetiljobb-button {
+  margin-top: 10px; /* Add margin between inputs and button */
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.Leggetiljobb-button:hover {
+  background-color: #0056b3;
+}
+
+.Leggetiljobb-errorMessage {
+  color: red;
+  margin-top: 5px;
+}
+
+.Leggetiljobb-successMessage {
+  color: green;
+  margin-top: 5px;
+}
