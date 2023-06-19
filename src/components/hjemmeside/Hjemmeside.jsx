@@ -5,11 +5,15 @@ import SearchBar from "../Search/Search";
 import BigCard from "../BigCard/BigCard";
 import keycloak from "../keycloak/keycloak";
 import { useNavigate } from "react-router-dom";
-import { withAuth } from "../../hoc/withAuth";
+import withAuth from "../../hoc/withAuth";
+import LikeList from "../likelist/LikeList";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
+  const [likesMap, setLikesMap] = useState(new Map());
+  const [showPersonFromLike, setShowPersonFromLike] = useState(false);
+  const [cardId, setCardId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -36,16 +40,22 @@ const Hjemmeside = () => {
         `http://localhost:8080/api/v1/stilling/${stillingId}/users/${keycloak.tokenParsed.sub}`,
         {
           method: "PUT",
-          body: JSON.stringify({
+          /*body: JSON.stringify({
             // Add parameters here
-          }),
+          }),*/
           headers: {
             "Content-type": "application/json; charset=UTF-8",
             "Access-Control-Allow-Origin": "*",
           },
         }
       )
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            return response.json(); // Parse the JSON if response is successful
+          } else {
+            throw new Error("Request failed with status: " + response.status);
+          }
+        })
         .then((data) => {
           console.log(data);
           // Handle data
@@ -53,6 +63,8 @@ const Hjemmeside = () => {
         .catch((err) => {
           console.log(err.message);
         });
+
+      await updateAndGetLikes(stillingId);
     } catch (error) {
       console.log(error);
     }
@@ -63,13 +75,32 @@ const Hjemmeside = () => {
       stilling.tittel.includes(searchWord)
     );
     return filteredData.map((item) => {
+      let likesCount = likesMap.get(item.id) || 0;
       return (
         <div className="card" key={item.id}>
           <Space direction="vertical" size={16}>
             <Card
               title={item.tittel}
               extra={
-                <button onClick={postUserToStilling(item.id)}>Like</button>
+                <div>
+                  <button
+                    onClick={() => {
+                      postUserToStilling(item.id);
+                    }}
+                  >
+                    Like {likesCount}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowPersonFromLike(!showPersonFromLike);
+                      setCardId(item.id);
+                    }}
+                  >
+                    {showPersonFromLike
+                      ? "Hide people who liked"
+                      : "Show people who liked"}
+                  </button>
+                </div>
               }
               style={{ width: 300 }}
             >
@@ -82,9 +113,27 @@ const Hjemmeside = () => {
     });
   };
 
+  const updateAndGetLikes = async (id) => {
+    console.log(id);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/stilling/${id}/users`
+      );
+      const json = await response.json();
+      let likesCount = json.length;
+      setLikesMap((prevLikesMap) => new Map(prevLikesMap).set(id, likesCount));
+
+      console.log(likesMap);
+      return likesCount;
+    } catch (error) {
+      console.log("Error fetching users", error);
+      return 0;
+    }
+  };
+
   return (
     <div>
-      <h1>Hjemmeside</h1>
       <SearchBar
         SearchWord={searchWord}
         setSearchWord={setSearchWord}
@@ -92,12 +141,13 @@ const Hjemmeside = () => {
       />
       <h2>Data Display</h2>
 
-      <div className="cardContainer">
-        <BigCard></BigCard>
-        {filterData()}
-      </div>
+      <div className="cardContainer">{filterData()}</div>
+
+      {showPersonFromLike ? (
+        <LikeList postUserToStilling={postUserToStilling} id={cardId} />
+      ) : null}
     </div>
   );
 };
 
-export default Hjemmeside;
+export default withAuth(Hjemmeside);

@@ -7,7 +7,7 @@ import keycloak from "../keycloak/keycloak";
 
 const Leggetiljobb = () => {
   const [stilling, setStilling] = useState({
-    firma:"",
+    firma: "",
     tittel: "",
     firma: "",
     beskrivelse: "",
@@ -15,8 +15,8 @@ const Leggetiljobb = () => {
     plassering: "",
     soknadsfrist: "",
     lenke: "",
-    kode:"",
-    users: keycloak.tokenParsed.sub,
+    kode: "",
+    users: null,
   });
 
   const handleInputChange = (event) => {
@@ -28,18 +28,18 @@ const Leggetiljobb = () => {
     event.preventDefault();
     try {
       // Fetch the current user information
-      const currentUser = await getUser(keycloak.tokenParsed.sub);
+      //const currentUser = await getUser(keycloak.tokenParsed.sub);
 
       // Create a new job listing object with the user information
       const jobListing = {
         ...stilling,
-        users: [currentUser.id],
+        //users: [currentUser.id],
       };
       //stilling.users = currentUser.id;
 
       const response = await addStilling(jobListing);
       console.log(response);
-      alert("Stillingsannonsen har blitt registrert")
+      alert("Stillingsannonsen har blitt registrert");
     } catch (error) {
       console.error(error);
     }
@@ -48,11 +48,14 @@ const Leggetiljobb = () => {
   return (
     <div className="Leggetiljobb-container">
       <h3 className="jobb">Legge til en jobb</h3>
-        <p className="jobb">Du vet hva du leter etter. Vi hjelper deg å finne dem. Legg ut ledige stillinger og ansett raskt det beste talentet</p>
+      <p className="jobb">
+        Du vet hva du leter etter. Vi hjelper deg å finne dem. Legg ut ledige
+        stillinger og ansett raskt det beste talentet
+      </p>
       <div className="Leggetiljobb-card">
         <form onSubmit={handleSubmit}>
-        <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Firma:</span>
+          <label className="Leggetiljobb-label">
+            <span className="Leggetiljobb-label-text">Firma:</span>
             <input
               type="text"
               name="firma"
@@ -64,7 +67,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Tittel:</span>
+            <span className="Leggetiljobb-label-text">Tittel:</span>
             <input
               type="text"
               name="tittel"
@@ -76,7 +79,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Beskrivelse:</span>
+            <span className="Leggetiljobb-label-text">Beskrivelse:</span>
             <input
               type="text"
               name="beskrivelse"
@@ -100,7 +103,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Plassering:</span>
+            <span className="Leggetiljobb-label-text">Plassering:</span>
             <input
               type="text"
               name="plassering"
@@ -112,7 +115,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Søknadsfrist:</span>
+            <span className="Leggetiljobb-label-text">Søknadsfrist:</span>
             <input
               type="date"
               name="soknadsfrist"
@@ -123,7 +126,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Ekstern lenke:</span>
+            <span className="Leggetiljobb-label-text">Ekstern lenke:</span>
             <input
               type="text"
               name="lenke"
@@ -133,7 +136,7 @@ const Leggetiljobb = () => {
           </label>
 
           <label className="Leggetiljobb-label">
-          <span className="Leggetiljobb-label-text">Kodeområde:</span>
+            <span className="Leggetiljobb-label-text">Kodeområde:</span>
             <input
               type="text"
               name="kode"
