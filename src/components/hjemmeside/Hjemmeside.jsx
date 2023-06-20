@@ -7,6 +7,7 @@ import keycloak from "../keycloak/keycloak";
 import { useNavigate } from "react-router-dom";
 import withAuth from "../../hoc/withAuth";
 import LikeList from "../likelist/LikeList";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ const Hjemmeside = () => {
 
   useEffect(() => {
     fetchData();
+    getAllLikesFromDB();
   }, []);
 
   const fetchData = async () => {
@@ -111,6 +113,23 @@ const Hjemmeside = () => {
         </div>
       );
     });
+  };
+
+  const getAllLikesFromDB = async () => {
+    const response = await fetch(`http://localhost:8080/api/v1/stilling`);
+    const json = await response.json();
+
+    if (json == null) {
+      return;
+    } else {
+      json.map((item) => {
+        console.log(item.id);
+        console.log(item.users);
+        setLikesMap((prevLikesMap) =>
+          new Map(prevLikesMap).set(item.id, item.users.length)
+        );
+      });
+    }
   };
 
   const updateAndGetLikes = async (id) => {
