@@ -23,6 +23,7 @@ const LikeList = (props) => {
   useEffect(() => {
     loadMoreData();
   }, []);
+
   return (
     <div
       id="scrollableDiv"
@@ -38,13 +39,15 @@ const LikeList = (props) => {
         next={loadMoreData}
         hasMore={data.length < 50}
         loader={
-          <Skeleton
-            avatar
-            paragraph={{
-              rows: 1,
-            }}
-            active
-          />
+          loading && (
+            <Skeleton
+              avatar
+              paragraph={{
+                rows: 1,
+              }}
+              active
+            />
+          )
         }
         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
         scrollableTarget="scrollableDiv"
@@ -52,14 +55,19 @@ const LikeList = (props) => {
         <List
           dataSource={data}
           renderItem={(item) => (
-            <List.Item key={item}>
-              {console.log(item)}
+            <List.Item key={item.id}>
               <List.Item.Meta
-                avatar={<Avatar src={item} />}
-                title={<a href="https://ant.design">{item}</a>}
-                description={item}
+                avatar={<Avatar src={item.url} />}
+                title={
+                  <a href={`/users/${item.id}`}>
+                    {item.firstname}
+                    {item.lastname}
+                  </a>
+                }
+                description={item.email}
               />
-              <div>{item}</div>
+
+              <div>{item.lastName}</div>
             </List.Item>
           )}
         />

@@ -16,7 +16,7 @@ const Leggetiljobb = () => {
     soknadsfrist: "",
     lenke: "",
     kode: "",
-    users: null,
+    users: [],
   });
 
   const handleInputChange = (event) => {

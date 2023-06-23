@@ -123,8 +123,6 @@ const Hjemmeside = () => {
       return;
     } else {
       json.map((item) => {
-        console.log(item.id);
-        console.log(item.users);
         setLikesMap((prevLikesMap) =>
           new Map(prevLikesMap).set(item.id, item.users.length)
         );
@@ -133,17 +131,15 @@ const Hjemmeside = () => {
   };
 
   const updateAndGetLikes = async (id) => {
-    console.log(id);
-
     try {
       const response = await fetch(
         `http://localhost:8080/api/v1/stilling/${id}/users`
       );
       const json = await response.json();
       let likesCount = json.length;
+      console.log(likesCount);
       setLikesMap((prevLikesMap) => new Map(prevLikesMap).set(id, likesCount));
 
-      console.log(likesMap);
       return likesCount;
     } catch (error) {
       console.log("Error fetching users", error);

@@ -14,6 +14,7 @@ const Profil = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [selger, setSelger] = useState(false);
+  const [stilling, setStilling] = useState(null);
 
   const navigate = useNavigate();
 
@@ -40,6 +41,7 @@ const Profil = () => {
       setLastName(fetchedUser.lastName);
       setEmail(fetchedUser.email);
       setSelger(fetchedUser.selger);
+      setStilling(fetchedUser.stilling);
     } catch (error) {
       // Handle error
     }
@@ -82,6 +84,7 @@ const Profil = () => {
           lastName: lastName,
           email: email,
           selger: selger,
+          stilling: stilling,
         }),
       });
 
