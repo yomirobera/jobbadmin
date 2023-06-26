@@ -16,6 +16,7 @@ const Leggetiljobb = () => {
     soknadsfrist: "",
     lenke: "",
     kode: "",
+    madeByUser: keycloak.tokenParsed.sub,
     users: [],
   });
 

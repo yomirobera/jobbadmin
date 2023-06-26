@@ -26,7 +26,7 @@ const MineStillinger = () => {
 
   const filterStillingerByUser = () => {
     return stillinger.filter((stilling) => {
-      return stilling.users.includes(userId);
+      return stilling.madeByUser.includes(userId);
     });
   };
 
