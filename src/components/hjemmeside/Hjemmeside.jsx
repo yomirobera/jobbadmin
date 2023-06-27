@@ -1,40 +1,35 @@
 import React, { useState, useEffect } from "react";
 import "./Hjemmeside.css";
-import { Card, Space } from "antd";
+import { Card, Space, Button } from "antd";
 import SearchBar from "../Search/Search";
-import BigCard from "../BigCard/BigCard";
+//import BigCard from "../BigCard/BigCard";
 import keycloak from "../keycloak/keycloak";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import withAuth from "../../hoc/withAuth";
-import LikeList from "../likelist/LikeList";
+
 import { ConsoleSqlOutlined } from "@ant-design/icons";
+
+import LikeList from "../likeList/LikeList";
+import { fetchData } from "../../api/Hjemmeside";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [likesMap, setLikesMap] = useState(new Map());
-  const [showPersonFromLike, setShowPersonFromLike] = useState(false);
+  //const [showPersonFromLike, setShowPersonFromLike] = useState(false);
   const [cardId, setCardId] = useState(null);
+  const [showPersonFromLikeMap, setShowPersonFromLikeMap] = useState(new Map());
+  const [anyCardShowingLikes, setAnyCardShowingLikes] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    fetchData().then((fetchedData) => setData(fetchedData));
     getAllLikesFromDB();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/api/v1/stilling");
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.log("Error fetching data", error);
-    }
-  };
-
-  let navigate = useNavigate();
+  /* let navigate = useNavigate();
   const routeChange = (path) => {
     navigate(path);
-  };
+  };*/
 
   const postUserToStilling = async (stillingId) => {
     try {
@@ -82,30 +77,44 @@ const Hjemmeside = () => {
         <div className="card" key={item.id}>
           <Space direction="vertical" size={16}>
             <Card
-              title={item.tittel}
+              title={<div hidden={true}>{item.tittel}</div>}
               extra={
                 <div>
-                  <button
+                  <Button
+                    type="primary"
                     onClick={() => {
                       postUserToStilling(item.id);
                     }}
                   >
-                    Like {likesCount}
-                  </button>
-                  <button
+                    Like, {likesCount}
+                  </Button>
+                  <Button
                     onClick={() => {
-                      setShowPersonFromLike(!showPersonFromLike);
+                      setShowPersonFromLikeMap((prev) => {
+                        const clone = new Map(prev);
+                        clone.set(item.id, !clone.get(item.id));
+                        return clone;
+                      });
+                      if (showPersonFromLikeMap.get(item.id)) {
+                        setAnyCardShowingLikes(false);
+                      } else {
+                        setAnyCardShowingLikes(true);
+                      }
                       setCardId(item.id);
                     }}
+                    disabled={
+                      anyCardShowingLikes && !showPersonFromLikeMap.get(item.id)
+                    }
                   >
-                    {showPersonFromLike
+                    {showPersonFromLikeMap.get(item.id)
                       ? "Hide people who liked"
                       : "Show people who liked"}
-                  </button>
+                  </Button>
                 </div>
               }
               style={{ width: 300 }}
             >
+              <h1>{item.tittel}</h1>
               <p>{item.beskrivelse}</p>
               <p>{item.krav}</p>
             </Card>
@@ -154,11 +163,11 @@ const Hjemmeside = () => {
         setSearchWord={setSearchWord}
         filterData={filterData}
       />
-      <h2>Data Display</h2>
+      <h2>Stillinger</h2>
 
       <div className="cardContainer">{filterData()}</div>
 
-      {showPersonFromLike ? (
+      {showPersonFromLikeMap.get(cardId) ? (
         <LikeList postUserToStilling={postUserToStilling} id={cardId} />
       ) : null}
     </div>

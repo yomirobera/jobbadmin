@@ -22,7 +22,7 @@ const LikeList = (props) => {
   };
   useEffect(() => {
     loadMoreData();
-  }, []);
+  });
 
   return (
     <div
