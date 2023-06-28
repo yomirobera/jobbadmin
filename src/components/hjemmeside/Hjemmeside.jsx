@@ -168,7 +168,7 @@ const Hjemmeside = () => {
       <div className="cardContainer">{filterData()}</div>
 
       {showPersonFromLikeMap.get(cardId) ? (
-        <LikeList postUserToStilling={postUserToStilling} id={cardId} />
+        <LikeList postUserToStilling={postUserToStilling} id={cardId} key={cardId} />
       ) : null}
     </div>
   );

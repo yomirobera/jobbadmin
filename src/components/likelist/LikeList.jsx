@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const LikeList = (props) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
   const loadMoreData = () => {
     if (loading) {
       return;
@@ -21,8 +22,9 @@ const LikeList = (props) => {
       });
   };
   useEffect(() => {
+    setData([]);
     loadMoreData();
-  });
+  }, [props.id]);
 
   return (
     <div
