@@ -10,7 +10,7 @@ import withAuth from "../../hoc/withAuth";
 import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 import LikeList from "../likeList/LikeList";
-import { fetchData } from "../../api/Hjemmeside";
+import { fetchData } from "../../api/HjemmesideAPI";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
