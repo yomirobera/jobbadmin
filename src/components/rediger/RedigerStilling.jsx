@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { getStillinger, updateStilling } from "../../api/LeggtilJobb";
 import keycloak from "../keycloak/keycloak";
 import withAuth from "../../hoc/withAuth";
@@ -11,7 +11,7 @@ const RedigerStilling = () => {
   const navigate = useNavigate();
 
   const TilbakeKnapp = () => {
-    navigate('/MineStillinger');
+    navigate("/MineStillinger");
   };
 
   const { id } = useParams();
@@ -25,7 +25,8 @@ const RedigerStilling = () => {
     soknadsfrist: "",
     lenke: "",
     kode: "",
-    users: keycloak.tokenParsed.sub,
+    madeByUser: "",
+    users: [],
   });
 
   useEffect(() => {
@@ -35,7 +36,9 @@ const RedigerStilling = () => {
   const fetchStilling = async () => {
     try {
       const stillinger = await getStillinger();
-      const selectedStilling = stillinger.find((stilling) => stilling.id === parseInt(id));
+      const selectedStilling = stillinger.find(
+        (stilling) => stilling.id === parseInt(id)
+      );
       if (selectedStilling) {
         setStilling(selectedStilling);
       }
@@ -55,7 +58,7 @@ const RedigerStilling = () => {
     e.preventDefault();
     try {
       await updateStilling(stilling);
-      alert("Du har oppdatert stillingsannonsen")
+      alert("Du har oppdatert stillingsannonsen");
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +69,7 @@ const RedigerStilling = () => {
       <h3>Rediger stilling:</h3>
       <form onSubmit={handleSubmit}>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Firma:</span>
+          <span className="RedigerStilling-label-text">Firma:</span>
           <input
             className="RedigerStilling-input"
             type="text"
@@ -76,7 +79,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Tittel:</span>
+          <span className="RedigerStilling-label-text">Tittel:</span>
           <input
             className="RedigerStilling-input"
             type="text"
@@ -86,7 +89,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Beskrivelse:</span>
+          <span className="RedigerStilling-label-text">Beskrivelse:</span>
           <textarea
             className="RedigerStilling-input"
             name="beskrivelse"
@@ -95,7 +98,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Krav:</span>
+          <span className="RedigerStilling-label-text">Krav:</span>
           <textarea
             className="RedigerStilling-input"
             name="krav"
@@ -104,7 +107,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Plassering:</span>
+          <span className="RedigerStilling-label-text">Plassering:</span>
           <input
             className="RedigerStilling-input"
             type="text"
@@ -114,7 +117,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Søknadsfrist:</span>
+          <span className="RedigerStilling-label-text">Søknadsfrist:</span>
           <input
             className="RedigerStilling-input"
             type="date"
@@ -124,7 +127,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Lenke:</span>
+          <span className="RedigerStilling-label-text">Lenke:</span>
           <input
             className="RedigerStilling-input"
             type="text"
@@ -134,7 +137,7 @@ const RedigerStilling = () => {
           />
         </label>
         <label className="RedigerStilling-label">
-        <span className="RedigerStilling-label-text">Kode:</span>
+          <span className="RedigerStilling-label-text">Kode:</span>
           <input
             className="RedigerStilling-input"
             type="text"
@@ -143,9 +146,13 @@ const RedigerStilling = () => {
             onChange={handleInputChange}
           />
         </label>
-        <button className="RedigerStilling-button" type="submit">Lagre endringer</button>
+        <button className="RedigerStilling-button" type="submit">
+          Lagre endringer
+        </button>
       </form>
-      <button className="applicationKnapp" onClick={TilbakeKnapp}>Tilbake til dine stillingsannonser</button>
+      <button className="applicationKnapp" onClick={TilbakeKnapp}>
+        Tilbake til dine stillingsannonser
+      </button>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Avatar, Divider, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { UserOutlined } from "@ant-design/icons";
 
 const LikeList = (props) => {
   const [loading, setLoading] = useState(false);
@@ -59,9 +60,9 @@ const LikeList = (props) => {
           renderItem={(item) => (
             <List.Item key={item.id}>
               <List.Item.Meta
-                avatar={<Avatar src={item.url} />}
+                avatar={<Avatar icon={<UserOutlined />} />}
                 title={
-                  <a href={`/users/${item.id}`}>
+                  <a>
                     {item.firstname}
                     {item.lastname}
                   </a>
