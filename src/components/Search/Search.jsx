@@ -7,7 +7,7 @@ const SearchBar = (props) => {
     <Form>
       <Input
         className="SearchField"
-        placeholder="Search positions"
+        placeholder="Søk i stillinger"
         onChange={(e) => props.setSearchWord(e.target.value)}
         //onSubmit={props.filterData()}
       ></Input>

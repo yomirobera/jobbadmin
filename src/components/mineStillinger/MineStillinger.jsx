@@ -57,7 +57,7 @@ const MineStillinger = () => {
 
   return (
     <div>
-      <h3>Dine stillinger:</h3>
+      <h3>Dine stillinger</h3>
       {filteredStillinger.map((stilling) => (
         <Card key={stilling.id}>
           <h4>{stilling.firma}</h4>
