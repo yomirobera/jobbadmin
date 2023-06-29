@@ -20,6 +20,7 @@ const Hjemmeside = () => {
   const [cardId, setCardId] = useState(null);
   const [showPersonFromLikeMap, setShowPersonFromLikeMap] = useState(new Map());
   const [anyCardShowingLikes, setAnyCardShowingLikes] = useState(false);
+  const [showLikesForCard, setShowLikesForCard] = useState(null);
 
   useEffect(() => {
     fetchData().then((fetchedData) => setData(fetchedData));
@@ -74,51 +75,68 @@ const Hjemmeside = () => {
     return filteredData.map((item) => {
       let likesCount = likesMap.get(item.id) || 0;
       return (
-        <div className="card" key={item.id}>
-          <Space direction="vertical" size={16}>
-            <Card
-              title={<div hidden={true}>{item.tittel}</div>}
-              extra={
-                <div>
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      postUserToStilling(item.id);
-                    }}
-                  >
-                    Like, {likesCount}
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setShowPersonFromLikeMap((prev) => {
-                        const clone = new Map(prev);
-                        clone.set(item.id, !clone.get(item.id));
-                        return clone;
-                      });
-                      if (showPersonFromLikeMap.get(item.id)) {
-                        setAnyCardShowingLikes(false);
-                      } else {
-                        setAnyCardShowingLikes(true);
-                      }
-                      setCardId(item.id);
-                    }}
-                    disabled={
-                      anyCardShowingLikes && !showPersonFromLikeMap.get(item.id)
-                    }
-                  >
-                    {showPersonFromLikeMap.get(item.id)
-                      ? "Hide people who liked"
-                      : "Show people who liked"}
-                  </Button>
-                </div>
-              }
-              style={{ width: 300 }}
-            >
-              <h1>{item.tittel}</h1>
-              <p>{item.beskrivelse}</p>
-              <p>{item.krav}</p>
-            </Card>
-          </Space>
+        <div>
+          <div className="card" key={item.id}>
+            <Space direction="vertical" size={16}>
+              <Card
+                title={<div hidden={true}>{item.tittel}</div>}
+                extra={
+                  <div>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        postUserToStilling(item.id);
+                      }}
+                    >
+                      Like, {likesCount}
+                    </Button>
+                    <Button
+                      /*  onClick={() => {
+                        setShowPersonFromLikeMap((prev) => {
+                          const clone = new Map(prev);
+                          clone.set(item.id, !clone.get(item.id));
+                          return clone;
+                        });
+                        if (showPersonFromLikeMap.get(item.id)) {
+                          setAnyCardShowingLikes(false);
+                        } else {
+                          setAnyCardShowingLikes(true);
+                        }
+                        setCardId(item.id);
+                      }}
+                      disabled={
+                        anyCardShowingLikes &&
+                        !showPersonFromLikeMap.get(item.id)
+                      }*/
+
+                      onClick={() => {
+                        if (showLikesForCard === item.id) {
+                          // If this card is already showing the likes, hide them
+                          setShowLikesForCard(null);
+                        } else {
+                          // Otherwise show them
+                          setShowLikesForCard(item.id);
+                        }
+                      }}
+                    >
+                      {showLikesForCard === item.id
+                        ? "Hide people who liked"
+                        : "Show people who liked"}
+                    </Button>
+                  </div>
+                }
+                style={{ width: 300 }}
+              >
+                <h1>{item.tittel}</h1>
+                <p>{item.beskrivelse}</p>
+                <p>{item.krav}</p>
+              </Card>
+            </Space>
+          </div>
+          {/* Place the LikeList component here */}
+          {showLikesForCard === item.id ? (
+            <LikeList postUserToStilling={postUserToStilling} id={item.id} />
+          ) : null}
         </div>
       );
     });
@@ -168,7 +186,11 @@ const Hjemmeside = () => {
       <div className="cardContainer">{filterData()}</div>
 
       {showPersonFromLikeMap.get(cardId) ? (
-        <LikeList postUserToStilling={postUserToStilling} id={cardId} key={cardId} />
+        <LikeList
+          postUserToStilling={postUserToStilling}
+          id={cardId}
+          key={cardId}
+        />
       ) : null}
     </div>
   );
