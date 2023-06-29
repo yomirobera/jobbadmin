@@ -127,7 +127,8 @@ const Hjemmeside = () => {
                 }
                 style={{ width: 300 }}
               >
-                <h1>{item.tittel}</h1>
+                <h1>{item.firma}</h1>
+                <h3>{item.tittel}</h3>
                 <p>{item.beskrivelse}</p>
                 <p>{item.krav}</p>
               </Card>
