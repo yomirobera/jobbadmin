@@ -10,6 +10,7 @@ import withAuth from "../../hoc/withAuth";
 import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 import LikeList from "../likeList/LikeList";
+import Chat from "../WebChat/Chat";
 import { fetchData } from "../../api/HjemmesideAPI";
 
 const Hjemmeside = () => {
@@ -22,8 +23,13 @@ const Hjemmeside = () => {
   const [anyCardShowingLikes, setAnyCardShowingLikes] = useState(false);
   const [showLikesForCard, setShowLikesForCard] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    fetchData().then((fetchedData) => setData(fetchedData));
+    fetchData().then((fetchedData) => {
+      setData(fetchedData);
+      setLoading(false);
+    });
     getAllLikesFromDB();
   }, []);
 
@@ -69,6 +75,10 @@ const Hjemmeside = () => {
   };
 
   var filterData = () => {
+    if (!data) {
+      // Data is undefined, so return an empty array
+      return [];
+    }
     const filteredData = data.filter((stilling) =>
       stilling.tittel.includes(searchWord)
     );
@@ -183,16 +193,24 @@ const Hjemmeside = () => {
         filterData={filterData}
       />
       <h2>Stillinger</h2>
-
-      <div className="cardContainer">{filterData()}</div>
+      {console.log(data)}
+      {loading ? (
+        <p>Loading...</p> // This is a placeholder, you can replace it with a spinner or something else.
+      ) : (
+        <div className="cardContainer">{filterData()}</div>
+      )}
 
       {showPersonFromLikeMap.get(cardId) ? (
-        <LikeList
-          postUserToStilling={postUserToStilling}
-          id={cardId}
-          key={cardId}
-        />
+        <div>
+          <LikeList
+            postUserToStilling={postUserToStilling}
+            id={cardId}
+            key={cardId}
+          />
+        </div>
       ) : null}
+
+      <Chat id={3}></Chat>
     </div>
   );
 };
