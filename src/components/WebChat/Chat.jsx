@@ -36,7 +36,7 @@ const Chat = (props) => {
     <div>
       <SockJsClient
         url="http://localhost:8080/websocket-chat"
-        topics={[`/${id}/queue/messages`]}
+        topics={[`/queue/messages`]}
         onConnect={() => console.log("Connected!")}
         onDisconnect={() => console.log("Disconnected!")}
         onMessage={onMessageReceive}
