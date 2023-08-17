@@ -1,4 +1,4 @@
-import Application from "../components/application/Application";
+import Application from "../components/pages/application/Application";
 
 const ApplicationView = () => (
     <>

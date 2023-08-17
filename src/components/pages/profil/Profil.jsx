@@ -1,8 +1,8 @@
-import withAuth from "../../hoc/withAuth";
+import withAuth from "../../../hoc/withAuth";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import keycloak from "../keycloak/keycloak";
-import { apiUrl } from "../../api/user";
+import keycloak from "../../keycloak/keycloak";
+import { apiUrl } from "../../../api/user";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 

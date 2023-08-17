@@ -1,4 +1,4 @@
-import Hjemmeside from "../components/hjemmeside/Hjemmeside";
+import Hjemmeside from "../components/pages/hjemmeside/Hjemmeside";
 
 
 const HjemmesideView = () => (

@@ -1,4 +1,4 @@
-import MineStillinger from "../components/mineStillinger/MineStillinger";
+import MineStillinger from "../components/pages/mineStillinger/MineStillinger";
 
 const MineStillingerView = () => (
     <>

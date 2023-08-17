@@ -1,4 +1,4 @@
-import Leggetiljobb from "../components/leggetiljobb/Leggetiljobb";
+import Leggetiljobb from "../components/pages/leggetiljobb/Leggetiljobb";
 
 
 const LeggetiljobbView = () => (

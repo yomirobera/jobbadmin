@@ -13,6 +13,10 @@ const Chat = (props) => {
   };
 
   const sendMessage = (msg, recipient) => {
+    if (!clientRef) {
+      console.error("Client is not connected, cannot send message");
+      return; // Return early, don't attempt to send the message
+    }
     const chatMSG = {
       senderId: recipient,
       message: msg,

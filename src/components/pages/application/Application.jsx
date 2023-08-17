@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiUrl } from "../../api/user";
-import withAuth from '../../hoc/withAuth';
-import keycloak from '../keycloak/keycloak';
+import { apiUrl } from "../../../api/user";
+import withAuth from '../../../hoc/withAuth';
+import keycloak from '../../keycloak/keycloak';
 import { Card, Space } from "antd";
 import "./Application.css";
 

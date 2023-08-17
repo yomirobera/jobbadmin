@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import withAuth from "../../hoc/withAuth";
-import { addStilling } from "../../api/LeggtilJobb";
-import { getUser } from "../../api/user";
+import withAuth from "../../../hoc/withAuth";
+import { addStilling } from "../../../api/LeggtilJobb";
+import { getUser } from "../../../api/user";
 import "./Leggetiljobb.css";
-import keycloak from "../keycloak/keycloak";
+import keycloak from "../../keycloak/keycloak";
 
 const Leggetiljobb = () => {
   const [stilling, setStilling] = useState({
     firma: "",
     tittel: "",
-    firma: "",
     beskrivelse: "",
     krav: "",
     plassering: "",

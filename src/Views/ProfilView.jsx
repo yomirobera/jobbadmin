@@ -1,4 +1,4 @@
-import Profil from "../components/profil/Profil";
+import Profil from "../components/pages/profil/Profil";
 
 
 const ProfilView = () => (

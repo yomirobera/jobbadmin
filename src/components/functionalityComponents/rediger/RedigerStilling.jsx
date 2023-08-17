@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { getStillinger, updateStilling } from "../../api/LeggtilJobb";
-import keycloak from "../keycloak/keycloak";
-import withAuth from "../../hoc/withAuth";
+import { getStillinger, updateStilling } from "../../../api/LeggtilJobb";
+import keycloak from "../../keycloak/keycloak";
+import withAuth from "../../../hoc/withAuth";
 
 import "./RedigerStilling.css";
 

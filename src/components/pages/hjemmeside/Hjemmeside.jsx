@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./Hjemmeside.css";
 import { Card, Space, Button } from "antd";
-import SearchBar from "../Search/Search";
+import SearchBar from "../../functionalityComponents/Search/Search";
 //import BigCard from "../BigCard/BigCard";
-import keycloak from "../keycloak/keycloak";
+import keycloak from "../../keycloak/keycloak";
 //import { useNavigate } from "react-router-dom";
-import withAuth from "../../hoc/withAuth";
+import withAuth from "../../../hoc/withAuth";
 
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
-import LikeList from "../likeList/LikeList";
-import Chat from "../WebChat/Chat";
-import { fetchData } from "../../api/HjemmesideAPI";
+
+import LikeList from "../../functionalityComponents/likeList/LikeList";
+import Chat from "../../functionalityComponents/WebChat/Chat";
+import { fetchData } from "../../../api/HjemmesideAPI";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
@@ -164,6 +164,7 @@ const Hjemmeside = () => {
         setLikesMap((prevLikesMap) =>
           new Map(prevLikesMap).set(item.id, item.users.length)
         );
+        
       });
     }
   };

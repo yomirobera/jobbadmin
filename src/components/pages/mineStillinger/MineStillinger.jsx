@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getStillinger, deleteStilling } from "../../api/LeggtilJobb";
-import keycloak from "../keycloak/keycloak";
+import { getStillinger, deleteStilling } from "../../../api/LeggtilJobb";
+import keycloak from "../../keycloak/keycloak";
 import { Card, Button, Space, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";

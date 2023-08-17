@@ -1,6 +1,6 @@
-import keycloak from "../keycloak/keycloak";
+import keycloak from "../../keycloak/keycloak";
 import { NavLink, useNavigate } from "react-router-dom";
-import { addUsers, getUser } from "../../api/user";
+import { addUsers, getUser } from "../../../api/user";
 import React, { useState, useEffect } from "react";
 
 import './NavBar.css';
