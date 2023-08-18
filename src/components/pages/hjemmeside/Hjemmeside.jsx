@@ -7,11 +7,10 @@ import keycloak from "../../keycloak/keycloak";
 //import { useNavigate } from "react-router-dom";
 import withAuth from "../../../hoc/withAuth";
 
-
-
 import LikeList from "../../functionalityComponents/likeList/LikeList";
 import Chat from "../../functionalityComponents/WebChat/Chat";
 import { fetchData } from "../../../api/HjemmesideAPI";
+import UserBotChat from "../../functionalityComponents/UserAndBotChat/UserBotChat";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
@@ -164,7 +163,6 @@ const Hjemmeside = () => {
         setLikesMap((prevLikesMap) =>
           new Map(prevLikesMap).set(item.id, item.users.length)
         );
-        
       });
     }
   };
@@ -212,6 +210,7 @@ const Hjemmeside = () => {
       ) : null}
 
       <Chat id={3}></Chat>
+      <UserBotChat sessionId={1} />
     </div>
   );
 };
