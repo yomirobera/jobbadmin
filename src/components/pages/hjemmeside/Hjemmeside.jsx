@@ -8,9 +8,9 @@ import keycloak from "../../keycloak/keycloak";
 import withAuth from "../../../hoc/withAuth";
 
 import LikeList from "../../functionalityComponents/likeList/LikeList";
-import Chat from "../../functionalityComponents/WebChat/Chat";
+import Chat from "../../functionalityComponents/WebChat/WebChat";
 import { fetchData } from "../../../api/HjemmesideAPI";
-import UserBotChat from "../../functionalityComponents/UserAndBotChat/UserBotChat";
+import UserBotChat from "../../functionalityComponents/UserAndBotChat/UserChat";
 
 const Hjemmeside = () => {
   const [data, setData] = useState([]);
@@ -192,7 +192,7 @@ const Hjemmeside = () => {
         filterData={filterData}
       />
       <h2>Stillinger</h2>
-      {console.log(data)}
+
       {loading ? (
         <p>Loading...</p> // This is a placeholder, you can replace it with a spinner or something else.
       ) : (
@@ -208,9 +208,6 @@ const Hjemmeside = () => {
           />
         </div>
       ) : null}
-
-      <Chat id={3}></Chat>
-      <UserBotChat sessionId={1} />
     </div>
   );
 };

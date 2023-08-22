@@ -2,6 +2,7 @@ import { Avatar, Divider, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const LikeList = (props) => {
   const [loading, setLoading] = useState(false);
@@ -69,6 +70,12 @@ const LikeList = (props) => {
                 }
                 description={item.email}
               />
+
+              <div>
+                {item && item.id && (
+                  <Link to={`/chat?reciver=${item.id}`}>Chat med-</Link>
+                )}
+              </div>
 
               <div>{item.lastName}</div>
             </List.Item>

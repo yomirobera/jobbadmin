@@ -7,6 +7,7 @@ import LeggetiljobbView from "./Views/LeggetiljobbView";
 import ApplicationView from "./Views/ApplicationView";
 import MineStillingerView from "./Views/MineStillingerView";
 import RedigerStilling from "./components/functionalityComponents/rediger/RedigerStilling";
+import ChatView from "./Views/ChatView";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/MineStillinger" element={<MineStillingerView />} />
             <Route path="/Application" element={<ApplicationView />} />
             <Route path="/edit-stilling/:id" element={<RedigerStilling />} />
+            <Route path="/chat" element={<ChatView />} />
           </Routes>
         }
       </div>

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+/*import React, { useEffect, useState } from "react";
 import SockJsClient from "react-stomp";
 
-const Chat = (props) => {
+const WebChat = (props) => {
   const id = props.id.toString();
   const [clientRef, setClientRef] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -67,4 +67,5 @@ const Chat = (props) => {
   );
 };
 
-export default Chat;
+export default WebChat;
+*/
