@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import keycloak from "../../keycloak/keycloak";
+import "./BotChat.css";
+import { RobotOutlined } from "@ant-design/icons";
 
 function UserAndBotChat() {
   const [messages, setMessages] = useState([]);
@@ -12,6 +14,7 @@ function UserAndBotChat() {
   const [loading, setLoading] = useState(false);
 
   const hasRun = useRef(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Fetch all messages by session ID on component mount and periodically thereafter
   useEffect(() => {
@@ -35,6 +38,10 @@ function UserAndBotChat() {
     const intervalId = setInterval(fetchMessages, 5000); // Fetch messages every 5 seconds
     return () => clearInterval(intervalId); // Cleanup on unmount
   });
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
   const fetchMessages = async () => {
     if (!sessionId) return;
@@ -143,25 +150,39 @@ function UserAndBotChat() {
   };
 
   return (
-    <div className="chat-container">
-      <div className="chat-messages">
-        {messages.map((message) => (
-          <div key={message.id} className="chat-message">
-            {/* Display sender if needed */}
-            <p>{message.message}</p>
-          </div>
-        ))}
-      </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
+    <>
+      {/* Chatbot Icon */}
+      <div id="chatbotIcon" onClick={toggleChat}>
+        <RobotOutlined
+          alt="BotChat"
+          style={{ fontSize: "40px", color: "red" }}
         />
-        <button onClick={handleBotMessage}>Send</button>
       </div>
-    </div>
+
+      <div
+        id="chatbotPopup"
+        className="chat-popup"
+        style={{ display: isChatOpen ? "block" : "none" }}
+      >
+        <div className="chat-bot-messages">
+          {messages.map((message) => (
+            <div key={message.id} className="chat-bot-message">
+              {/* Display sender if needed */}
+              <p>{message.message}</p>
+            </div>
+          ))}
+        </div>
+        <div className="chat-bot-input">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type a message..."
+          />
+          <button onClick={handleBotMessage}>Send</button>
+        </div>
+      </div>
+    </>
   );
 }
 

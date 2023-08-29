@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { addUsers, getUser } from "../../../api/user";
 import React, { useState, useEffect } from "react";
 
-import './NavBar.css';
+import "./NavBar.css";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -20,10 +20,8 @@ const NavBar = () => {
     };
 
     if (keycloak.authenticated) {
-      console.log(keycloak.tokenParsed.sub);
       getUser(keycloak.tokenParsed.sub)
         .then((result) => {
-          console.log(result);
           if (!result) {
             console.log("POST");
             addUsers();
@@ -42,53 +40,59 @@ const NavBar = () => {
   return (
     <div className="navbar">
       {!keycloak.authenticated && (
-
         <div className="navbar__item navbar__item--right">
           <button className="navbar__button" onClick={() => keycloak.login()}>
             Logg inn
           </button>
-          <button className="navbar__button" onClick={() => keycloak.register()}>
+          <button
+            className="navbar__button"
+            onClick={() => keycloak.register()}
+          >
             Ny bruker
           </button>
         </div>
-
       )}
 
       {keycloak.authenticated && (
         <div className="navbar__item">
-
           <NavLink className="navbar__link" activeClassName="active" to="/">
             Stillingsannonser
-
           </NavLink>
         </div>
       )}
 
       {keycloak.authenticated && userRole && userRole !== "Selger" && (
         <div className="navbar__item">
-
-          <NavLink className="navbar__link" activeClassName="active" to="/leggetiljobb">
+          <NavLink
+            className="navbar__link"
+            activeClassName="active"
+            to="/leggetiljobb"
+          >
             Legg til jobb
-
           </NavLink>
         </div>
       )}
 
       {keycloak.authenticated && userRole && userRole !== "Selger" && (
         <div className="navbar__item">
-
-          <NavLink className="navbar__link" activeClassName="active" to="/MineStillinger">
-          Mine Stillinger
+          <NavLink
+            className="navbar__link"
+            activeClassName="active"
+            to="/MineStillinger"
+          >
+            Mine Stillinger
           </NavLink>
         </div>
       )}
 
       {keycloak.authenticated && (
         <div className="navbar__item">
-
-          <NavLink className="navbar__link" activeClassName="active" to="/Profil">
+          <NavLink
+            className="navbar__link"
+            activeClassName="active"
+            to="/Profil"
+          >
             Profil
-
           </NavLink>
         </div>
       )}
@@ -107,7 +111,5 @@ const NavBar = () => {
     </div>
   );
 };
-
-
 
 export default NavBar;

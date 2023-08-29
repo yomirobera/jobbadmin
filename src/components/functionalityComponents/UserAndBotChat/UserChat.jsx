@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import keycloak from "../../keycloak/keycloak";
+import "./UserChat.css";
 
 function UserAndBotChat({ reciver }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
   const [sessionId, setSessionId] = useState();
-  const [isReceiverBot, setIsReceiverBot] = useState(false);
+  const [users, setUsers] = useState({});
+
   const [loading, setLoading] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
 
   const hasRun = useRef(false);
 
@@ -44,6 +45,19 @@ function UserAndBotChat({ reciver }) {
       );
       const data = await response.json();
       setMessages(data);
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+    }
+  };
+
+  const fetchUser = async (user) => {
+    if (!sessionId) return;
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/users/${user}`
+      );
+      const data = await response.json();
+      setUsers((prevUsers) => ({ ...prevUsers, [user]: data.lastName }));
     } catch (error) {
       console.error("Failed to fetch messages:", error);
     }
@@ -113,15 +127,25 @@ function UserAndBotChat({ reciver }) {
     }
   };
 
+  messages.map((message) => {});
+
   return (
     <div className="chat-container">
       <div className="chat-messages">
-        {messages.map((message) => (
-          <div key={message.id} className="chat-message">
-            {/* Display sender if needed */}
-            <p>{message.message}</p>
-          </div>
-        ))}
+        {messages.map((message) => {
+          
+          if (!users[message.userId]) {
+            fetchUser(message.userId);
+          }
+          return (
+            <div key={message.id} className="user-message">
+              
+
+              <p>{users[message.userId] || "Loading..."}: </p>
+              <p>{message.message}</p>
+            </div>
+          );
+        })}
       </div>
       <div className="chat-input">
         <input

@@ -6,6 +6,7 @@ import SearchBar from "../../functionalityComponents/Search/Search";
 import keycloak from "../../keycloak/keycloak";
 //import { useNavigate } from "react-router-dom";
 import withAuth from "../../../hoc/withAuth";
+import BotChat from "../../functionalityComponents/UserAndBotChat/BotChat";
 
 import LikeList from "../../functionalityComponents/likeList/LikeList";
 import Chat from "../../functionalityComponents/WebChat/WebChat";
@@ -54,15 +55,15 @@ const Hjemmeside = () => {
       )
         .then((response) => {
           if (response.ok) {
-            return response.json(); // Parse the JSON if response is successful
+            return response; // Parse the JSON if response is successful
           } else {
             throw new Error("Request failed with status: " + response.status);
           }
         })
-        .then((data) => {
-          console.log(data);
-          // Handle data
-        })
+        //.then((data) => {
+        //console.log(data);
+        // Handle data
+        //})
         .catch((err) => {
           console.log(err.message);
         });
@@ -208,6 +209,7 @@ const Hjemmeside = () => {
           />
         </div>
       ) : null}
+      <BotChat />
     </div>
   );
 };

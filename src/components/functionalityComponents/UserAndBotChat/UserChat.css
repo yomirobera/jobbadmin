@@ -1,0 +1,63 @@
+.chat-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  position: relative;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+
+  display: grid;
+  place-items: center; /* This will center the child elements both vertically and horizontally */
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+}
+
+.chat-messages {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 70%;
+  flex: 1;
+}
+
+.user-message {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  color: black;
+  height: 70px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid black;
+}
+
+.input-area {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-area input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.input-area button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  background-color: #0056b3;
+}
